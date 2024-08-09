@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { LoginPage } from "./ui/LoginPage"
-import { TodosPage } from "./todos/TodosPage"
+import { TodosPage , loader as todoLoader} from "./todos/TodosPage"
 
 const router = createBrowserRouter([
   {path: "/", element: <LoginPage></LoginPage>},
-  {path: "/todos", element: <TodosPage></TodosPage>}
+  {path: "/todos", element: <TodosPage></TodosPage>, loader: todoLoader}
 ])
 
 
