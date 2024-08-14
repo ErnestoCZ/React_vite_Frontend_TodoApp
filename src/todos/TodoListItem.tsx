@@ -1,20 +1,25 @@
 import {FC} from 'react';
 import {Todo} from '../models/todo.model';
+import { Box,Button,ListItem } from '@chakra-ui/react';
+import styled from 'styled-components';
 interface TodolistItemProps {
     item: Todo,
 }
-
+const StyledListItemBox = styled(Box)`
+    width: 100%;
+    background-color: wheat;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    
+`
 export const TodoListItem: FC<TodolistItemProps> = ({item}) => {
     return(
-        <li>
-            <div className='bg-yellow-500 my-2 p-2 rounded-md text-2xl text-left grid grid-rows-2'>
-                <div className='font-sans'>
-                    {item.title}
-                </div>
-                <div className='italic'>
-                    {item.description}
-                </div>
-            </div>
-        </li>
+        <ListItem>
+            <StyledListItemBox>
+                {item.title}
+                <Button colorScheme='red'>Delete</Button>
+            </StyledListItemBox>
+        </ListItem>
     )
 }
