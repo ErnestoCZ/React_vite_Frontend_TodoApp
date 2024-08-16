@@ -1,8 +1,8 @@
-import {FC, useRef, useState} from 'react';
+import {FC} from 'react';
 import { Todo } from '../models/todo.model';
-import { FormControl, Input,Button,Box, Flex, FormLabel } from '@chakra-ui/react';
+import { FormControl, Input,Button, Flex, FormLabel } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import {DevTool} from '@hookform/devtools';
+import { DevTool } from '@hookform/devtools';
 
 
 interface TodoInputFormProps {

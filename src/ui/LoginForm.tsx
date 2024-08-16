@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import {useForm} from 'react-hook-form';
 import {DevTool} from '@hookform/devtools';
-import {Input, Box, Button, Center, Flex, FormControl, FormLabel} from '@chakra-ui/react';
+import {Input, Box, Button, Center, Flex, FormControl, FormLabel, Spacer} from '@chakra-ui/react';
 import styled from 'styled-components';
 
 type FormValues= {
@@ -45,6 +45,8 @@ export const LoginForm:FC = () => {
                             <FormLabel htmlFor='password'>Password</FormLabel>
                             <Input type='password' id='password'  {...register("password", {required: 'Password is required'})}/>
                             <Center>
+                                <Button colorScheme='orange' type='reset'>Reset</Button>
+                                <Spacer/>
                                 <Button colorScheme='blue' type='submit'>Login</Button>
                             </Center>
                         </FormControl>
