@@ -22,3 +22,10 @@ const LoginCredentialsSchema = z.object({
 });
 
 export type LoginCredentials = z.infer<typeof LoginCredentialsSchema>;
+
+export const userSchema = z.object({
+  id: z.string().uuid(),
+  email: z.string().email(),
+  password: z.string(),
+});
+export type User = z.infer<typeof userSchema>;

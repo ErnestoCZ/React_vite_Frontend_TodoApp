@@ -3,6 +3,9 @@ import {useForm} from 'react-hook-form';
 import {DevTool} from '@hookform/devtools';
 import {Input, Box, Button, Center, Flex, FormControl, FormLabel, Spacer} from '@chakra-ui/react';
 import styled from 'styled-components';
+import { loginRequest } from '../services/apiAuth';
+import { userSchema, User} from '../models/todo.model';
+import { useNavigate } from 'react-router-dom';
 
 type FormValues= {
     email:string
@@ -25,13 +28,19 @@ const StyledCenteredBox = styled(Center)`
     padding: 10px;
     
 `
+
 export const LoginForm:FC = () => {
-    
+    const navigation = useNavigate();
+
     const {register, handleSubmit,control} = useForm<FormValues>()
     const onSubmit = (data: FormValues) => {
+        console.log("before parsing")
 
-        console.log(data)
-
+        const res = loginRequest(data.email, data.password)
+        Promise.all([res]).then((values)=> {
+            const loggedInUser : User= userSchema.parse(values)
+            console.log(loggedInUser)
+        })
     }
     return(
         <StyledLoginForm>
