@@ -1,7 +1,8 @@
 import { User } from '../models/todo.model';
+const baseAddrBackend: string = 'http://localhost:3000';
 
 export async function loginRequest(email: string, password: string) {
-  const res = await fetch('http://localhost:3000/users/signin', {
+  const res = await fetch(`${baseAddrBackend}/users/signin`, {
     headers: { 'content-type': 'application/json' },
     method: 'POST',
     body: JSON.stringify({
@@ -15,5 +16,20 @@ export async function loginRequest(email: string, password: string) {
 
   const data: User = await res.json();
   console.log(data, 'extracted data from response');
+  return data;
+}
+
+export async function logoutRequest() {
+  const res = await fetch(`${baseAddrBackend}/users/signout`, {
+    headers: { 'content-type': 'application/json' },
+    method: 'POST',
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to signout');
+  }
+
+  const data = await res.json();
+  console.log(data);
   return data;
 }

@@ -15,7 +15,6 @@ const StyledUnorderedTodoListBox = styled(UnorderedList)`
 export const TodoList: FC<TodoListProps> = ({items,addTodoHandler}) => {
 
     return(
-
         <>
         <h2 className='text-5xl text-left m-3 '>MyTodos</h2>
         
@@ -23,14 +22,11 @@ export const TodoList: FC<TodoListProps> = ({items,addTodoHandler}) => {
             <div className='border-solid border-2 border-yellow-500 m-2 p-2'>
 
                 <TodoInputForm addTodoHandler={addTodoHandler} />
-                <UnorderedList>
+                <StyledUnorderedTodoListBox>
                     {items.map(item => <TodoListItem key={item.id} item={item}></TodoListItem>)}
-                </UnorderedList>            
+                </StyledUnorderedTodoListBox>            
             </div>
         </div>
-
-        
-         
         </>
     )
 }

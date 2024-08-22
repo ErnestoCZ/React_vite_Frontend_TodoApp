@@ -3,9 +3,8 @@ import {useForm} from 'react-hook-form';
 import {DevTool} from '@hookform/devtools';
 import {Input, Box, Button, Center, Flex, FormControl, FormLabel, Spacer} from '@chakra-ui/react';
 import styled from 'styled-components';
-import { loginRequest } from '../services/apiAuth';
-import { userSchema, User} from '../models/todo.model';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Context/AuthContext';
+import { userSchema } from '../models/todo.model';
 
 type FormValues= {
     email:string
@@ -30,17 +29,17 @@ const StyledCenteredBox = styled(Center)`
 `
 
 export const LoginForm:FC = () => {
-    const navigation = useNavigate();
+    // const navigation = useNavigate();
 
     const {register, handleSubmit,control} = useForm<FormValues>()
+    const auth = useAuth();
+    
     const onSubmit = (data: FormValues) => {
         console.log("before parsing")
 
-        const res = loginRequest(data.email, data.password)
-        Promise.all([res]).then((values)=> {
-            const loggedInUser : User= userSchema.parse(values)
-            console.log(loggedInUser)
-        })
+        auth?.login(data.email,data.password).then(value => auth.user = userSchema.parse(value));
+        console.log(auth?.user)
+        
     }
     return(
         <StyledLoginForm>
@@ -55,6 +54,9 @@ export const LoginForm:FC = () => {
                             <Input type='password' id='password'  {...register("password", {required: 'Password is required'})}/>
                             <Center>
                                 <Button colorScheme='orange' type='reset'>Reset</Button>
+                                <Button type='button' onClick={() => {
+                                    console.log(auth?.user)
+                                }}>ShowContext</Button>
                                 <Spacer/>
                                 <Button colorScheme='blue' type='submit'>Login</Button>
                             </Center>

@@ -4,6 +4,7 @@ import { TodoList } from './TodoList';
 // import {fakeTodos} from '../fakeData/todoListFakeData';
 import { fetchTodos } from '../services/apiTodos';
 import {Todo, todoArraySchema } from '../models/todo.model';
+import { Spinner } from '@chakra-ui/react';
 
 
 
@@ -34,7 +35,7 @@ export const TodosPage: FC<PropsWithChildren<TodoPageProps>> = () => {
     return(
 
         <>
-        {isLoading && <h1>Loading...</h1>}
+        {/* {isLoading && <Spinner></Spinner>} */}
         <button className='text-left rounded-md bg-yellow-500 px-5' onClick={() => {navigate(-1)}}>Back</button>
         <div className='m-5 bg-slate-500 text-center rounded-md p-3'>
             <TodoList items={todos} addTodoHandler={addTodoHandler}></TodoList>

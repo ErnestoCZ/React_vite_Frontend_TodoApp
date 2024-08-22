@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {Todo} from '../models/todo.model';
-import { Box,Button,ListItem } from '@chakra-ui/react';
+import { Box,Button,ButtonGroup,Flex,ListItem, Spacer } from '@chakra-ui/react';
 import styled from 'styled-components';
 interface TodolistItemProps {
     item: Todo,
@@ -16,10 +16,18 @@ const StyledListItemBox = styled(Box)`
 export const TodoListItem: FC<TodolistItemProps> = ({item}) => {
     return(
         <ListItem>
-            <StyledListItemBox>
-                {item.title}
-                <Button colorScheme='red'>Delete</Button>
-            </StyledListItemBox>
+            <Flex alignItems={'center'}>
+                <StyledListItemBox>
+                    {item.title}
+
+                <ButtonGroup gap={4}>
+                    <Button colorScheme='gray'>Edit</Button>
+                    <Button colorScheme='red'>Delete</Button>
+                </ButtonGroup>
+                <Spacer/>
+                </StyledListItemBox>
+
+            </Flex>
         </ListItem>
     )
 }
