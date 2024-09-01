@@ -1,39 +1,46 @@
-import {FC, PropsWithChildren, useEffect } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { FC }from 'react';
 import { TodoList } from './TodoList';
-// import {fakeTodos} from '../fakeData/todoListFakeData';
 import { fetchTodosByUser } from '../services/apiTodos';
-import { todoArraySchema } from '../models/todo.model';
-import { useAuthStore, useTodoStore } from '../States/store';
+import { useAuthStore } from '../States/store';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { Center, Spinner } from '@chakra-ui/react';
 
-export async function loader({params}){
-    console.log("Loader called")
-    const todos = await fetchTodosByUser(params.userId);
-    return todos;
-}
-
-interface TodoPageProps {
-    title?: string,
-}
-
-
-export const TodosPage: FC<PropsWithChildren<TodoPageProps>> = () => {
-    const todosFromBackend =  todoArraySchema.parse( useLoaderData());
-    useEffect(()=> {
-        
-    },[]);
-
-    const todos = useTodoStore(state => state.todos);
+export const TodosPage: FC = () => {
+    const userId = useAuthStore(state => state.user);
     const logout = useAuthStore((state)=> state.logout);
+    const navigate = useNavigate();
 
-    return(
+    function onLogoutHandler(){
+        logout();
+        navigate('/')
+    }
+
+    const {data: todosData, isLoading} = useQuery({queryKey: ['todosByUserId', {userId}], queryFn: () => fetchTodosByUser(userId)});
+    
+    if(isLoading){
+        return(
+            <Center h={'100%'}>
+                <Spinner/>Data is loading...
+            </Center>
+        )
+    }
+
+    if(!isLoading && todosData) {
+        return(
         <>
-            <button className='text-left rounded-md bg-yellow-500 px-5' onClick={logout}>Logout</button>
+            <button className='text-left rounded-md bg-yellow-500 px-5' onClick={onLogoutHandler}>Logout</button>
             <div className='m-5 bg-slate-500 text-center rounded-md p-3'>
-                <TodoList items={todos} ></TodoList>
+                <TodoList items={todosData} ></TodoList>
             </div>
         </>
     )
+    }
+
+    return null
+
+
+    
 
     
 }

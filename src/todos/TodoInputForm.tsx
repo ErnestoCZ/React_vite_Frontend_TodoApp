@@ -19,6 +19,7 @@ export const TodoInputForm: FC<TodoInputFormProps> = ({addTodoHandler}) => {
     const onSubmit = (data: FormData) => {
         console.log(data)
         //TODO add new task via backend => if success than add to list
+        
     }
     const {control,register, handleSubmit} = useForm<FormData>()
     return(

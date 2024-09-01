@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import {useForm} from 'react-hook-form';
 import {DevTool} from '@hookform/devtools';
 import {Input, Box, Button, Center, Flex, FormControl, FormLabel, Spacer} from '@chakra-ui/react';
@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { userSchema } from '../models/todo.model';
 import { loginRequest } from '../services/apiAuth';
 import { useAuthStore } from '../States/store';
-import { useNavigate } from 'react-router-dom';
 
 type FormValues= {
     email:string
@@ -31,12 +30,7 @@ const StyledCenteredBox = styled(Center)`
 `
 
 export const LoginForm:FC = () => {
-    // const navigation = useNavigate();
-    const navigate = useNavigate();
     const login = useAuthStore((state) => state.login);
-    const isAuthenticated = useAuthStore((state)=> state.isAuthenticated)
-    const userId = useAuthStore((state) => state.user);
-
     const {register, handleSubmit,control} = useForm<FormValues>();
     
     const onSubmit = async (data: FormValues) => {
@@ -46,11 +40,7 @@ export const LoginForm:FC = () => {
         login(userResponse.id);
     }
 
-    useEffect(() => {
-        if(isAuthenticated){
-            navigate(`/todos/${userId}`);
-        }
-    },[userId,isAuthenticated,navigate]);
+
 
 
     return(
