@@ -15,7 +15,6 @@ export async function loginRequest(email: string, password: string) {
   }
 
   const data: User = await res.json();
-  console.log(data, 'extracted data from response');
   return data;
 }
 
@@ -23,13 +22,15 @@ export async function logoutRequest() {
   const res = await fetch(`${baseAddrBackend}/users/signout`, {
     headers: { 'content-type': 'application/json' },
     method: 'POST',
+    body: JSON.stringify({}),
   });
+  console.log(res);
 
   if (!res.ok) {
     throw new Error('Failed to signout');
   }
 
-  const data = await res.json();
-  console.log(data);
-  return data;
+  // const data = await res.json();
+  // console.log(data);
+  return res;
 }

@@ -1,10 +1,12 @@
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {DevTool} from '@hookform/devtools';
 import {Input, Box, Button, Center, Flex, FormControl, FormLabel, Spacer} from '@chakra-ui/react';
 import styled from 'styled-components';
-import { useAuth } from '../Context/AuthContext';
 import { userSchema } from '../models/todo.model';
+import { loginRequest } from '../services/apiAuth';
+import { useAuthStore } from '../States/store';
+import { useNavigate } from 'react-router-dom';
 
 type FormValues= {
     email:string
@@ -30,17 +32,27 @@ const StyledCenteredBox = styled(Center)`
 
 export const LoginForm:FC = () => {
     // const navigation = useNavigate();
+    const navigate = useNavigate();
+    const login = useAuthStore((state) => state.login);
+    const isAuthenticated = useAuthStore((state)=> state.isAuthenticated)
+    const userId = useAuthStore((state) => state.user);
 
-    const {register, handleSubmit,control} = useForm<FormValues>()
-    const auth = useAuth();
+    const {register, handleSubmit,control} = useForm<FormValues>();
     
-    const onSubmit = (data: FormValues) => {
-        console.log("before parsing")
-
-        auth?.login(data.email,data.password).then(value => auth.user = userSchema.parse(value));
-        console.log(auth?.user)
-        
+    const onSubmit = async (data: FormValues) => {
+        const loginResponse = await loginRequest(data.email,data.password);
+        console.log(loginResponse);
+        const userResponse = userSchema.parse(loginResponse);
+        login(userResponse.id);
     }
+
+    useEffect(() => {
+        if(isAuthenticated){
+            navigate(`/todos/${userId}`);
+        }
+    },[userId,isAuthenticated,navigate]);
+
+
     return(
         <StyledLoginForm>
             <StyledCenteredBox >
@@ -54,9 +66,6 @@ export const LoginForm:FC = () => {
                             <Input type='password' id='password'  {...register("password", {required: 'Password is required'})}/>
                             <Center>
                                 <Button colorScheme='orange' type='reset'>Reset</Button>
-                                <Button type='button' onClick={() => {
-                                    console.log(auth?.user)
-                                }}>ShowContext</Button>
                                 <Spacer/>
                                 <Button colorScheme='blue' type='submit'>Login</Button>
                             </Center>

@@ -1,5 +1,5 @@
-export async function fetchTodos() {
-  const res = await fetch('http://localhost:3000/todos/');
+export async function fetchTodosByUser(userId: string) {
+  const res = await fetch(`http://localhost:3000/todos/user/${userId}`);
   if (!res.ok) {
     throw new Error('Failed to fetch todos');
   }

@@ -16,12 +16,12 @@ export const todoArraySchema = z.array(todoSchema);
 
 export type Todo = z.infer<typeof todoSchema>;
 
-const LoginCredentialsSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-});
+// const LoginCredentialsSchema = z.object({
+//   email: z.string().email(),
+//   password: z.string(),
+// });
 
-export type LoginCredentials = z.infer<typeof LoginCredentialsSchema>;
+// export type LoginCredentials = z.infer<typeof LoginCredentialsSchema>;
 
 export const userSchema = z.object({
   id: z.string().uuid(),
