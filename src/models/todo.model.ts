@@ -6,8 +6,8 @@ import { z } from 'zod';
 //   description?: string;
 // }
 
-const todoSchema = z.object({
-  id: z.string().uuid(),
+export const todoSchema = z.object({
+  id: z.optional(z.string().uuid()),
   title: z.string(),
   description: z.string(),
 });

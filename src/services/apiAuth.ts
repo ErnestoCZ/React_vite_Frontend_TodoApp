@@ -1,8 +1,8 @@
 import { User } from '../models/todo.model';
-const baseAddrBackend: string = 'http://localhost:3000';
+import { baseAddrBackend } from './apiConstants';
 
 export async function loginRequest(email: string, password: string) {
-  const res = await fetch(`${baseAddrBackend}/users/signin`, {
+  const res: Response = await fetch(`${baseAddrBackend}/users/signin`, {
     headers: { 'content-type': 'application/json' },
     method: 'POST',
     body: JSON.stringify({
@@ -14,7 +14,9 @@ export async function loginRequest(email: string, password: string) {
     throw new Error('Failed to login');
   }
 
+  console.log(res.headers.get('set-cookies'));
   const data: User = await res.json();
+
   return data;
 }
 

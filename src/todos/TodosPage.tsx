@@ -8,6 +8,8 @@ import { Center, Spinner } from '@chakra-ui/react';
 
 export const TodosPage: FC = () => {
     const userId = useAuthStore(state => state.user);
+    const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+    console.log("userId", userId, "isAuthenticated", isAuthenticated);
     const logout = useAuthStore((state)=> state.logout);
     const navigate = useNavigate();
 
@@ -21,7 +23,7 @@ export const TodosPage: FC = () => {
     if(isLoading){
         return(
             <Center h={'100%'}>
-                <Spinner/>Data is loading...
+                <Spinner/>Todos are loading...
             </Center>
         )
     }

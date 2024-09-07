@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, useCallback, useMemo} from 'react';
 import {useForm} from 'react-hook-form';
 import {DevTool} from '@hookform/devtools';
 import {Input, Box, Button, Center, Flex, FormControl, FormLabel, Spacer} from '@chakra-ui/react';
@@ -32,16 +32,12 @@ const StyledCenteredBox = styled(Center)`
 export const LoginForm:FC = () => {
     const login = useAuthStore((state) => state.login);
     const {register, handleSubmit,control} = useForm<FormValues>();
-    
     const onSubmit = async (data: FormValues) => {
         const loginResponse = await loginRequest(data.email,data.password);
         console.log(loginResponse);
         const userResponse = userSchema.parse(loginResponse);
         login(userResponse.id);
     }
-
-
-
 
     return(
         <StyledLoginForm>
