@@ -29,3 +29,16 @@ export const userSchema = z.object({
   password: z.optional(z.string()),
 });
 export type User = z.infer<typeof userSchema>;
+
+export const signinResponseSchema = z.object({
+  JWT: z.string(),
+});
+
+export type SignInResponse = z.infer<typeof signinResponseSchema>;
+
+export const JWTTokenSchema = z.object({
+  id: z.string(),
+  iat: z.number(),
+  exp: z.number(),
+});
+export type JWTToken = z.infer<typeof JWTTokenSchema>;

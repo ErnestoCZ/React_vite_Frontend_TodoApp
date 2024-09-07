@@ -1,11 +1,12 @@
-import {FC, useCallback, useMemo} from 'react';
+import {FC} from 'react';
 import {useForm} from 'react-hook-form';
 import {DevTool} from '@hookform/devtools';
 import {Input, Box, Button, Center, Flex, FormControl, FormLabel, Spacer} from '@chakra-ui/react';
 import styled from 'styled-components';
-import { userSchema } from '../models/todo.model';
+import {decodeToken} from 'react-jwt';
 import { loginRequest } from '../services/apiAuth';
 import { useAuthStore } from '../States/store';
+import { JWTTokenSchema } from '../models/todo.model';
 
 type FormValues= {
     email:string
@@ -34,9 +35,11 @@ export const LoginForm:FC = () => {
     const {register, handleSubmit,control} = useForm<FormValues>();
     const onSubmit = async (data: FormValues) => {
         const loginResponse = await loginRequest(data.email,data.password);
-        console.log(loginResponse);
-        const userResponse = userSchema.parse(loginResponse);
-        login(userResponse.id);
+
+        const decodedToken = JWTTokenSchema.parse(decodeToken(loginResponse.JWT));
+        if(decodedToken){
+            login(decodedToken.id,loginResponse.JWT);
+        }
     }
 
     return(

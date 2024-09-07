@@ -1,4 +1,4 @@
-import { User } from '../models/todo.model';
+import { SignInResponse, signinResponseSchema } from '../models/todo.model';
 import { baseAddrBackend } from './apiConstants';
 
 export async function loginRequest(email: string, password: string) {
@@ -14,10 +14,12 @@ export async function loginRequest(email: string, password: string) {
     throw new Error('Failed to login');
   }
 
-  console.log(res.headers.get('set-cookies'));
-  const data: User = await res.json();
+  // console.log(decodeToken(parsedResponse.JWT));
+  const data = await res.json();
+  console.log(data, 'apiAuth');
+  const parsedResponse: SignInResponse = signinResponseSchema.parse(data);
 
-  return data;
+  return parsedResponse;
 }
 
 export async function logoutRequest() {

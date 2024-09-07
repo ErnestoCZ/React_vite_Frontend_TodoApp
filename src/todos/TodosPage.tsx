@@ -8,8 +8,6 @@ import { Center, Spinner } from '@chakra-ui/react';
 
 export const TodosPage: FC = () => {
     const userId = useAuthStore(state => state.user);
-    const isAuthenticated = useAuthStore(state => state.isAuthenticated);
-    console.log("userId", userId, "isAuthenticated", isAuthenticated);
     const logout = useAuthStore((state)=> state.logout);
     const navigate = useNavigate();
 
@@ -17,7 +15,6 @@ export const TodosPage: FC = () => {
         logout();
         navigate('/')
     }
-
     const {data: todosData, isLoading} = useQuery({queryKey: ['todosByUserId', {userId}], queryFn: () => fetchTodosByUser(userId)});
     
     if(isLoading){

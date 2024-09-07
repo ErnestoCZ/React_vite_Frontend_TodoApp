@@ -11,6 +11,7 @@ export const LoginPage : FC = () => {
     
     useEffect(() => {
         if(isAuthenticated){
+            console.log('navigation to user page')
             navigate(`/todos/${userId}`);
         }
     },[userId,isAuthenticated,navigate]);
