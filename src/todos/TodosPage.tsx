@@ -3,10 +3,12 @@ import { TodoList } from './TodoList';
 import { fetchTodosByUser } from '../services/apiTodos';
 import { useAuthStore } from '../States/store';
 import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Center, Spinner } from '@chakra-ui/react';
 
 export const TodosPage: FC = () => {
+    const user = useParams()
+    console.log(user)
     const userId = useAuthStore(state => state.user);
     const logout = useAuthStore((state)=> state.logout);
     const navigate = useNavigate();
@@ -28,7 +30,7 @@ export const TodosPage: FC = () => {
     if(!isLoading && todosData) {
         return(
         <>
-            <button className='text-left rounded-md bg-yellow-500 px-5' onClick={onLogoutHandler}>Logout</button>
+            <button className='text-left rounded-md bg-yellow-500 px-5 py-3' onClick={onLogoutHandler}>Logout</button>
             <div className='m-5 bg-slate-500 text-center rounded-md p-3'>
                 <TodoList items={todosData} ></TodoList>
             </div>
@@ -36,7 +38,7 @@ export const TodosPage: FC = () => {
     )
     }
 
-    return null
+    return null;
 
 
     

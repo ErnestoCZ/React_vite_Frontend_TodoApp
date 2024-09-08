@@ -35,7 +35,7 @@ export const TodoListItem: FC<TodolistItemProps> = ({item}) => {
                 <StyledListItemBox>
                 <Flex minWidth={'max-content'} gap={2}>
                     <Text fontSize={'3xl'}>{item.title}</Text>
-                    {/* <Text fontSize={'xl'}>{item.description}</Text> */}
+                    <Text fontSize={'xl'}>{item.description}</Text>
                 </Flex>
                 <Spacer/> 
                <ButtonGroup gap={2}>
